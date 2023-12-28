@@ -1,26 +1,28 @@
 '***************************************************************************************************
-' Script: Hey-Chat-VBS
+' Script: Hey-Chat-VBS v1 (29.12.2023)
 ' Author: Halil Emre Yildiz
 ' GitHub: @JahnStar
 ' Description: Hey Chat VBS is a simple chatbot that uses OpenAI API via Windows Script Host.
 '***************************************************************************************************
 
-Dim fso, file, endpoint, apiKey, model, randomness, prompt
+Dim fso, file, endpoint, apiKey, model, randomness, voice, prompt
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set file = fso.OpenTextFile("config.ini", 1) ' 1 means ForReading
 endpoint = file.ReadLine
 apiKey = file.ReadLine
 model = file.ReadLine
 randomness = file.ReadLine
+voice = file.ReadLine
 Do Until file.AtEndOfStream
     prompt = prompt & file.ReadLine & vbCrLf
 Loop
 file.Close
 
+Dim WshShell
+Set WshShell = CreateObject("WScript.Shell")
 If apiKey = "" or apiKey = "Enter your API key on this line." Then
-    Dim WshShell
-    Set WshShell = CreateObject("WScript.Shell")
     WshShell.Run "config.ini"
+    WshShell.Run "https://platform.openai.com/api-keys"
     WScript.Quit
 End if
 
@@ -34,7 +36,7 @@ Dim request, responseContent
 Set request = CreateObject("Microsoft.XMLHTTP")
 
 Dim messages
-messages = Array(Array("system", "[You are an AI assistant who can role-play, developed by Halil Emre Yildiz (AKA Jahn Star) and you are running in VBScript. [Github Page](https://github.com/JahnStar/Hey-Chat-VBS)]" & Replace(Replace(prompt, """", "'"), vbCrLf, "\n")), Array("user", message))
+messages = Array(Array("system", "[You are an AI assistant who can role-play, developed by Halil Emre Yildiz (AKA Jahn Star) and you are running in VBScript. [Github](https://github.com/JahnStar)]" & Replace(Replace(prompt, """", "'"), vbCrLf, "\n")), Array("user", message))
 
 Do While True 
 
@@ -60,6 +62,9 @@ Do While True
         ' add to messages
         ReDim Preserve messages(UBound(messages) + 1)
         messages(UBound(messages)) = Array("assistant", Replace(responseContent, vbCrLf, "\n"))
+        ' tts
+        If Left(message, 1) = "-" And voice = "-" Then voice = 0
+        If voice <> "-" Then WshShell.Run "tts.vbs """ & Split(responseContent, ":")(1) & """ " & voice
         ' continue or quit
         message = FixedInputBox(responseContent & vbCrLf & vbCrLf & "You:", "")
         If IsEmpty(message) Or message = "" Then

@@ -11,7 +11,8 @@ HeyChatVBScript is an AI chat bot developed using VBScript. This bot responds to
     2. API key
     3. API model name
     4. API temperature value
-    5. Enter your prompt starting from this line and in the subsequent lines.
+    5. TTS voice index (default: disabled "-")
+    6. Enter your prompt starting from this line and in the subsequent lines.
 
 ## Usage
 
