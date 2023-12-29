@@ -26,8 +26,11 @@ If apiKey = "" or apiKey = "Enter your API key on this line." Then
     WScript.Quit
 End if
 
-Dim requestBody, message
-message = FixedInputBox(Split(prompt, vbCrLf)(1) & vbCrLf & vbCrLf & "You:", "")
+Dim requestBody, firstMessage, message
+firstMessage = Split(prompt, vbCrLf)(1)
+Speak firstMessage, voice
+
+message = FixedInputBox(firstMessage & vbCrLf & vbCrLf & "You:", "")
 If IsEmpty(message) Or message = "" Then
     WScript.Quit
 End If
@@ -64,7 +67,7 @@ Do While True
         messages(UBound(messages)) = Array("assistant", Replace(responseContent, vbCrLf, "\n"))
         ' tts
         If Left(message, 1) = "-" And voice = "-" Then voice = 0
-        If voice <> "-" Then WshShell.Run "tts.vbs """ & Split(responseContent, ":")(1) & """ " & voice
+        Speak responseContent, voice
         ' continue or quit
         message = FixedInputBox(responseContent & vbCrLf & vbCrLf & "You:", "")
         If IsEmpty(message) Or message = "" Then
@@ -82,6 +85,10 @@ Do While True
         WScript.Quit 
     End If
 Loop
+
+Function Speak(text, voice)
+    If voice <> "-" Then WshShell.Run "tts.vbs """ & Split(text, ":")(1) & """ " & voice
+End Function
 
 Function ShowConversationLogs(messages)
     Dim logs
