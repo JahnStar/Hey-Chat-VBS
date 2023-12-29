@@ -27,7 +27,7 @@ If apiKey = "" or apiKey = "Enter your API key on this line." Then
 End if
 
 Dim requestBody, firstMessage, message
-firstMessage = Split(prompt, vbCrLf)(1)
+firstMessage = Split(prompt, vbCrLf)(0)
 Speak firstMessage, voice
 
 message = FixedInputBox(firstMessage & vbCrLf & vbCrLf & "You:", "")
@@ -146,10 +146,11 @@ Function ParseJSON(jsonString, key)
 End Function
 
 Function FixedInputBox(message, default)
-    FixedInputBox = InputBox(message, "Hey ChatVBS v1 <Github/JahnStar>", default)
-    jsonString = Replace(jsonString, "\""", "'")
-    jsonString = Replace(jsonString, "\\", "\")
-    jsonString = Replace(jsonString, "\n", vbCrLf)
+    message = InputBox(message, "Hey ChatVBS v1 <Github/JahnStar>", default)
+    message = Replace(message, """", "'")
+    message = Replace(message, "\""", "'")
+    message = Replace(message, "\\", "\")
+    FixedInputBox = Replace(message, "\n", vbCrLf)
 End Function
 
 ' Request example:
