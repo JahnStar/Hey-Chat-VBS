@@ -2,6 +2,12 @@
 
 HeyChatVBScript is an AI chat bot developed using VBScript. This bot responds to user inputs using OpenAI's GPT models.
 
+<div align="center">
+    <h2 align="center">Example:</h2>
+    <br><br>
+    <img src="example.png" width="50%">
+</div>
+
 ## Installation
 
 1. Clone or download this repository.
@@ -17,7 +23,7 @@ HeyChatVBScript is an AI chat bot developed using VBScript. This bot responds to
 
 ## Usage
 
-1. Run the `HeyChatVBScript.vbs` file.
+1. Run the `HeyChatVBScript.vbs` file. (Or execute it anywhere by just pressing Win+C with [Hey Quick Keyboard](https://github.com/JahnStar/Hey-Quick-Keyboard))
 2. Enter a message to the chat bot.
 3. Wait for the bot's response.
 4. Continue the conversation by clicking the `OK` button.
@@ -27,7 +33,7 @@ HeyChatVBScript is an AI chat bot developed using VBScript. This bot responds to
 
 MIT License
 
-Copyright (c) 2023 Halil Emre Yildiz
+Copyright (c) 2024 Halil Emre Yildiz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
