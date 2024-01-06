@@ -164,9 +164,8 @@ End Function
 '     {
 '       "role": "user",
 '       "content": "Hello!"
-'     },
+'     }],
 '    "temperature": 0.7
-'   ]
 ' }
 ' Response example:
 ' {
